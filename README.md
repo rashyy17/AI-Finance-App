@@ -1,4 +1,4 @@
-# AI-Finance-App
+# AI-Finance-App (Cashy)
 
 A smart finance management application powered by AI to help users track, analyze, and optimize their financial decisions.
 
