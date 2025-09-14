@@ -60,10 +60,10 @@ AI-Finance-App offers advanced tools for budgeting, expense tracking, and person
 ## Usage
 
 1. Register or log in with Clerk-powered OAuth.
-2. Connect your bank account or manually add expenses.
+2. Connect as many accounts as you wish eg. work, entertainment, miscellaneous etc.
 3. Use the AI receipt scanner for quick transaction entry.
 4. Set your budget and track transactions.
-5. Explore AI-powered insights and analytics on your dashboard.
+5. Explore graphical insights and analytics on your dashboard.
 
 ## Technologies Used
 
