@@ -1,37 +1,40 @@
 # AI-Finance-App
 
-A smart finance management application powered by artificial intelligence to help users track, analyze, and optimize their financial decisions.
+A smart finance management application powered by AI to help users track, analyze, and optimize their financial decisions.
 
 ## Overview
 
-AI-Finance-App provides advanced tools for budgeting, expense tracking, and personalized financial insights. The platform leverages AI to give users actionable suggestions and real-time analytics, making money management easier and smarter.
+AI-Finance-App offers advanced tools for budgeting, expense tracking, and personalized financial insights. Built with Next.js and Clerk for authentication, it features AI-powered receipt scanning using Gemini 1.5 Flash, and uses Supabase as its database, making money management easier and smarter.
 
 ## Features
 
-- **AI-driven insights:** Receive personalized suggestions to optimize your spending.
+- **AI-powered receipt scanning:** Quickly add transactions by scanning receipts using Gemini 1.5 Flash.
 - **Budget tracking:** Set budgets and monitor your expenses in real-time.
 - **Automatic categorization:** Transactions are smartly categorized for clarity.
 - **Dashboard analytics:** Visualize financial data with interactive charts and summaries.
-- **Secure authentication:** Protect your data with modern authentication methods.
-- **Receipt scanning with AI:** Add transactions quickly by scanning receipts.
+- **Secure authentication:** User login and account security powered by Clerk (OAuth).
+- **Modern UI:** Responsive and easy-to-use interface.
+- **Supabase database:** Fast and scalable backend solution.
 
 ## Screenshots
 
+> **Note:** Upload your screenshots to an `assets` folder in your repository, e.g., `assets/image1.png`, `assets/image2.png`, etc.
+
 ### Landing Page
-![image1](image1)
+![Landing Page](assets/image.png)  
 *Welcome screen introducing the AI-powered platform for managing finances smartly.*
 
 ### Dashboard Overview
-![image2](image2)
+![Dashboard Overview](assets/image-2.png)  
 *Graphical analytics of income and expenses with a transaction overview table.*
 
 ### Transaction List
-![image3](image3)
+![Transaction List](assets/image-3.png)  
 *Detailed list of transactions, categorized and color-coded for easy tracking.*
 
 ### Add Transaction
-![image4](image4)
-*Intuitive form to add new transactions, including an AI-powered receipt scanner.*
+![Add Transaction](assets/image-4.png)  
+*Intuitive form to add new transactions, including AI-powered receipt scanner.*
 
 ## Installation
 
@@ -42,38 +45,33 @@ AI-Finance-App provides advanced tools for budgeting, expense tracking, and pers
    ```
 
 2. **Install dependencies**
-   - For frontend (e.g., React):
-     ```bash
-     npm install
-     ```
-   - For backend (if Python):
-     ```bash
-     pip install -r requirements.txt
-     ```
+   ```bash
+   npm install
+   ```
 
-3. **Run the application**
-   - For frontend:
-     ```bash
-     npm start
-     ```
-   - For backend:
-     ```bash
-     python app.py
-     ```
+3. **Set up environment variables**  
+   Create a `.env.local` file and add your Clerk, Gemini, and Supabase API keys and configuration.
+
+4. **Run the application**
+   ```bash
+   npm run dev
+   ```
 
 ## Usage
 
-1. Register or log in to your account.
+1. Register or log in with Clerk-powered OAuth.
 2. Connect your bank account or manually add expenses.
-3. Set your budget and track transactions.
-4. Explore AI-powered insights and analytics on your dashboard.
+3. Use the AI receipt scanner for quick transaction entry.
+4. Set your budget and track transactions.
+5. Explore AI-powered insights and analytics on your dashboard.
 
 ## Technologies Used
 
-- **Frontend:** React.js
-- **Backend:** Python (Flask/FastAPI) or Node.js (specify if needed)
-- **AI/ML:** TensorFlow, scikit-learn
-- **Database:** MongoDB, PostgreSQL
+- **Frontend:** Next.js
+- **AI:** Gemini 1.5 Flash (for receipt scanning)
+- **Authentication:** Clerk (OAuth)
+- **Database:** Supabase
+- **Charts:** (e.g. Chart.js, Recharts, etc.)
 
 ## Contributing
 
