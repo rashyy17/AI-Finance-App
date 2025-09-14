@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI-Finance-App
 
-## Getting Started
+A smart finance management application powered by artificial intelligence to help users track, analyze, and optimize their financial decisions.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+AI-Finance-App provides advanced tools for budgeting, expense tracking, and personalized financial insights. The platform leverages AI to give users actionable suggestions and real-time analytics, making money management easier and smarter.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **AI-driven insights:** Receive personalized suggestions to optimize your spending.
+- **Budget tracking:** Set budgets and monitor your expenses in real-time.
+- **Automatic categorization:** Transactions are smartly categorized for clarity.
+- **Dashboard analytics:** Visualize financial data with interactive charts and summaries.
+- **Secure authentication:** Protect your data with modern authentication methods.
+- **Receipt scanning with AI:** Add transactions quickly by scanning receipts.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Screenshots
 
-## Learn More
+### Landing Page
+![image1](image1)
+*Welcome screen introducing the AI-powered platform for managing finances smartly.*
 
-To learn more about Next.js, take a look at the following resources:
+### Dashboard Overview
+![image2](image2)
+*Graphical analytics of income and expenses with a transaction overview table.*
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Transaction List
+![image3](image3)
+*Detailed list of transactions, categorized and color-coded for easy tracking.*
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Add Transaction
+![image4](image4)
+*Intuitive form to add new transactions, including an AI-powered receipt scanner.*
 
-## Deploy on Vercel
+## Installation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/rashyy17/AI-Finance-App.git
+   cd AI-Finance-App
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Install dependencies**
+   - For frontend (e.g., React):
+     ```bash
+     npm install
+     ```
+   - For backend (if Python):
+     ```bash
+     pip install -r requirements.txt
+     ```
+
+3. **Run the application**
+   - For frontend:
+     ```bash
+     npm start
+     ```
+   - For backend:
+     ```bash
+     python app.py
+     ```
+
+## Usage
+
+1. Register or log in to your account.
+2. Connect your bank account or manually add expenses.
+3. Set your budget and track transactions.
+4. Explore AI-powered insights and analytics on your dashboard.
+
+## Technologies Used
+
+- **Frontend:** React.js
+- **Backend:** Python (Flask/FastAPI) or Node.js (specify if needed)
+- **AI/ML:** TensorFlow, scikit-learn
+- **Database:** MongoDB, PostgreSQL
+
+## Contributing
+
+Contributions are welcome! Please create an issue to discuss ideas or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contact
+
+For questions, contact [rashyy17](https://github.com/rashyy17).
+
+---
+
+*Feel free to customize this README with more specific details about your app’s architecture, features, or setup instructions!*
