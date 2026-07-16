@@ -4,6 +4,8 @@ import { auth } from "@clerk/nextjs/server";
 import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { request } from "@arcjet/next";
+import aj from "@/lib/arcjet";
 const genAI=new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const serializeAmount = (obj) => ({
   ...obj,
@@ -15,31 +17,24 @@ export async function createTransaction(data) {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
 
-    // Get request data for ArcJet
-    // const req = await request();
+    // Rate limit this action per user via Arcjet (token bucket).
+    const req = await request();
+    const decision = await aj.protect(req, {
+      userId,
+      requested: 1, // consume 1 token per request
+    });
 
-    // // Check rate limit
-    // const decision = await aj.protect(req, {
-    //   userId,
-    //   requested: 1, // Specify how many tokens to consume
-    // });
-
-    // if (decision.isDenied()) {
-    //   if (decision.reason.isRateLimit()) {
-    //     const { remaining, reset } = decision.reason;
-    //     console.error({
-    //       code: "RATE_LIMIT_EXCEEDED",
-    //       details: {
-    //         remaining,
-    //         resetInSeconds: reset,
-    //       },
-    //     });
-
-    //     throw new Error("Too many requests. Please try again later.");
-    //   }
-
-    //   throw new Error("Request blocked");
-    // }
+    if (decision.isDenied()) {
+      if (decision.reason.isRateLimit()) {
+        const { remaining, reset } = decision.reason;
+        console.error({
+          code: "RATE_LIMIT_EXCEEDED",
+          details: { remaining, resetInSeconds: reset },
+        });
+        throw new Error("Too many requests. Please try again later.");
+      }
+      throw new Error("Request blocked");
+    }
 
     const user = await db.user.findUnique({
       where: { clerkUserId: userId },
@@ -119,18 +114,26 @@ function calculateNextRecurringDate(startDate, interval) {
 
 export async function scanReceipt(file) {
   try {
-    console.log("=== DEBUG INFO ===");
-    console.log("Gemini key present?", !!process.env.GEMINI_API_KEY);
-    console.log("File type:", file.type);
-    console.log("File size:", file.size);
+    // Rate limit the receipt scanner per user — it calls a paid API,
+    // so this protects against abuse and runaway cost.
+    const { userId } = await auth();
+    if (!userId) throw new Error("Unauthorized");
+
+    const req = await request();
+    const decision = await aj.protect(req, { userId, requested: 1 });
+    if (decision.isDenied()) {
+      if (decision.reason.isRateLimit()) {
+        throw new Error("Too many requests. Please try again later.");
+      }
+      throw new Error("Request blocked");
+    }
 
     if (!process.env.GEMINI_API_KEY) {
       throw new Error("GEMINI_API_KEY environment variable is not set");
     }
 
     // Use one of the available models that support image analysis
-    const model = genAI.getGenerativeModel({ model: "models/gemini-2.0-flash" });
-
+const model = genAI.getGenerativeModel({ model: "models/gemini-flash-latest" });
     // Convert File to ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();
     console.log("ArrayBuffer created, size:", arrayBuffer.byteLength);
