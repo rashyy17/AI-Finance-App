@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Cashy — AI-Assisted Personal Finance Tracker
 
-## Getting Started
+A full-stack personal finance web app for tracking income and expenses across multiple accounts, with monthly budgets, spending charts, and an **AI-powered receipt scanner** that auto-fills transactions from a photo.
 
-First, run the development server:
+Built with **Next.js 15 (App Router)**, **Prisma + PostgreSQL**, **Clerk** authentication, and **Google Gemini** for receipt parsing.
+
+---
+
+## Features
+
+- **Authentication** — email/social sign-in via Clerk; each user's data is scoped to their account.
+- **Accounts** — create multiple accounts (current/savings), set a default, track per-account balances.
+- **Transactions** — add, edit, and delete income/expense transactions; balances update atomically with each change.
+- **Transaction table** — search, filter (by type/recurring), sort, and bulk-delete transactions.
+- **Budgets** — set a monthly budget and track spending against it with a live progress bar.
+- **Charts** — per-account income vs. expense bar chart with selectable date ranges (Recharts).
+- **AI receipt scanner** — upload a receipt photo and Google Gemini extracts the amount, date, merchant, and category to pre-fill the transaction form.
+
+---
+
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router), React 19 |
+| Backend logic | Next.js Server Actions |
+| Database | PostgreSQL |
+| ORM | Prisma |
+| Auth | Clerk |
+| AI | Google Generative AI (Gemini) — receipt image → structured data |
+| UI | Tailwind CSS, shadcn/ui (Radix primitives), Recharts |
+| Forms & validation | React Hook Form + Zod |
+
+---
+
+## How it works
+
+- **Server Components** fetch data directly from the database on the server; **Client Components** handle interactivity.
+- **Server Actions** (in `actions/`) handle all mutations — there is almost no separate API layer.
+- On first sign-in, a Clerk user is synced into the app's own `users` table, and every server action re-checks auth and scopes queries to that user.
+- Transaction writes and the corresponding account-balance update run inside a single database transaction so balances stay consistent.
+- The receipt scanner sends the image to Gemini with a prompt requesting structured JSON, then parses the result and populates the form fields.
+
+---
+
+## Data model (Prisma)
+
+`User` → many `Account` → many `Transaction`, plus one `Budget` per user. Money is stored as `Decimal` and converted to a number at the client boundary. Foreign keys are indexed and use cascade deletes.
+
+---
+
+## Running locally
 
 ```bash
+# 1. Install dependencies
+npm install
+
+# 2. Set environment variables in .env
+#    DATABASE_URL / DIRECT_URL      (PostgreSQL)
+#    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY, CLERK_SECRET_KEY
+#    GEMINI_API_KEY
+
+# 3. Apply the database schema
+npx prisma migrate deploy
+
+# 4. Run the dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App runs at `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Status & notes
 
-## Learn More
+This is a learning project focused on building a complete, authenticated, database-backed full-stack app with a practical AI feature.
 
-To learn more about Next.js, take a look at the following resources:
+- The core flows (auth, accounts, transactions, budgets, charts, and the receipt scanner) are functional.
+- Some fields exist in the schema for **recurring transactions** and **budget alerts**; the background-job wiring (Inngest) for automatically processing these is scaffolded but not fully implemented.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Acknowledgements
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built while learning modern full-stack development with Next.js. UI components are based on [shadcn/ui](https://ui.shadcn.com/).
